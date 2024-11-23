@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <title>Diet Plan Request</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <script>
+        // JavaScript function to add 'required' attributes on Next button click
+        function validateOnNext(event) {
+            event.preventDefault();  // Prevent form submission initially
+
+            const form = document.querySelector('.lifestyle-physical-form');
+            const flashMessage = document.querySelector('.flash-message');
+            
+            let isValid = true;
+            flashMessage.style.display = "none";
+
+            
+
+            // Add required attributes to inputs
+            form.querySelectorAll('input, select, checkbox').forEach(input => {
+                input.setAttribute('required', true);
+            });
+
+            // Trigger form validation manually
+            if (!form.checkValidity()) {
+                // If validation fails, focus on the first invalid field
+                form.querySelector(':invalid').focus();
+                flashMessage.style.display = "block";
+                
+                setTimeout(function() {
+                    flashMessage.style.display = "none";
+                }, 5000);
+
+                isValid = false;
+            }
+
+            if (isValid) {
+                form.submit();
+                window.location.href = "{{ url_for('five') }}";  // If valid, submit the form
+            }
+        }
+        
+        // Function to navigate without validation when clicking Back
+        function goBack() {
+            window.location.href = "{{ url_for('three') }}";  // Redirect to the previous page
+        }
+    </script>
+</head>
+<body>
+
+
+
+<div class="container">
+    <img src="{{ url_for('static', filename='images/fpg.png') }}" alt="Food Plan" class="center-image">
+    
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="text-align: center;"><h2>Appetite Improvement Questionnaire</h2></div>
+        
+    </div>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="text-align: center;"><h3>(iv) Lifestyle and Physical Activity</h3></div>
+        
+    </div>
+    <br> <br>
+        
+</div>
+<div class="flash-message">
+    Missing fields. Please fill out all required fields.
+</div>
+    
+<div class="row" style="align-items: center;">
+    <div class="col-sm-1">
+
+    </div>
+    <div class="col-sm-11" >
+        <form class="lifestyle-physical-form">
+
+            <p>How would you describe your daily activity level?</p>
+            <div class="form-group">
+                
+                <label><input type="radio" name="activity-level" value="Sedentary">Sedentary</label>
+                <label><input type="radio" name="activity-level" value="Lightly Active">Lightly Active</label>
+                <label><input type="radio" name="activity-level" value="Moderately Active">Moderately Active</label>
+                <label><input type="radio" name="activity-level" value="Very Active">Very Active</label>
+            </div>
+
+            <p>How often do you exercise per week?</p>
+            <div class="form-group">
+                
+                <label><input type="radio" name="exercise-per-week" value="0 days">0 days</label>
+                <label><input type="radio" name="exercise-per-week" value="1-2 days">1-2 days</label>
+                <label><input type="radio" name="exercise-per-week" value="3-4 days">3-4 days</label>
+                <label><input type="radio" name="exercise-per-week" value="5+ days">5+ days</label>
+            </div>
+
+            <p>How much sleep do you get on average per night?</p>
+            <div class="form-group">
+                
+                <label><input type="radio" name="sleep-per-night" value="less than 5 hours">Less than 5 hours</label>
+                <label><input type="radio" name="sleep-per-night" value="5-6 hours">5-6 hours</label>
+                <label><input type="radio" name="sleep-per-night" value="7-8 hours">7-8 hours</label>
+                <label><input type="radio" name="sleep-per-night" value="9+ hours">9+ hours</label>
+            </div>
+
+    
+            <p for="stress-reduction-methods">Do you currently use any methods to reduce stress?</p>
+            <div class="form-group">
+                <textarea id="stress-reduction-methods" name="stress-reduction-methods" rows="4" placeholder="E.g., meditation, exercise, hobbies"></textarea>
+            </div> 
+
+           
+    </div>
+
+</div>
+<br> <br>
+<div class="container">
+    <div class="row">
+        <div class="navigation-buttons">
+            
+            <div class="col-sm-3">
+                
+                    <button type="button" id="back-button" class="nav-button back-button" onclick="goBack()"><= Back</button>
+                
+            </div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-6">
+               <button type="button" class="nav-button next-button" onclick="validateOnNext(event)">Next =></button>
+                    
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+</body>
+</html>

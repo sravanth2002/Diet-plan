@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diet Plan Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .day-plan {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+        .day-plan h3 {
+            color: #333;
+            margin-top: 0;
+        }
+        .meal {
+            margin: 5px 0;
+        }
+        .meal strong {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Get Your Weekly Diet Plan</h1>
+    <form action="/get_diet_plan" method="POST">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age" required><br>
+        
+        <label for="goals">Goals (e.g., gain weight, improve appetite):</label>
+        <input type="text" id="goals" name="goals" required><br>
+        
+        <label for="dietary_restrictions">Dietary Preferences:</label>
+        <input type="text" id="dietary_restrictions" name="dietary_restrictions" required><br>
+        
+        <button type="submit">Get Diet Plan</button>
+    </form>
+
+    <div id="response">
+        <h2>Your Diet Plan:</h2>
+        {% if response %}
+            {% for day in response %}
+                <div class="day-plan">
+                    <h3>{{ day.day }}:</h3>  <!-- Add ':' here to ensure correct display -->
+                    {% for meal, description in day.meals.items() %}
+                        <p class="meal"><strong>{{ meal }}:</strong> {{ description }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No diet plan available.</p>
+        {% endif %}
+    </div>
+
+    <h1>Want your previous diet plan?</h1>
+    <form method="POST" action="/get_existing_diet_plan">
+        <!-- Form field for retrieving existing diet plan -->
+        <label for="email_existing">Enter Email to Retrieve Plan:</label>
+        <input type="email" id="email_existing" name="email_existing" required><br><br>
+    
+        <button type="submit">Get Existing Diet Plan</button>
+    </form>
+
+
+    <div id="response">
+        <h2>Your Previous Diet Plan:</h2>
+        {% if previous_diet_plan %}
+            {% for day_plan in previous_diet_plan %}
+                <div class="day-plan">
+                    <h3>{{ day_plan.day }}:</h3>  <!-- Add ':' here to ensure correct display -->
+                    {% for meal, description in day_plan.meals.items() %}
+                        <p class="meal"><strong>{{ meal }}:</strong> {{ description }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No diet plan available.</p>
+        {% endif %}
+    </div>
+    
+
+</div>
+
+</body>
+</html>

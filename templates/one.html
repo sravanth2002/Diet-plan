@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <title>Diet Plan Request</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <script>
+        // JavaScript function to add 'required' attributes on Next button click
+        function validateOnNext(event) {
+            event.preventDefault();  // Prevent form submission initially
+
+            const form = document.querySelector('.health-info-form');
+            const flashMessage = document.querySelector('.flash-message');
+            
+            let isValid = true;
+            flashMessage.style.display = "none";
+
+            
+
+            // Add required attributes to inputs
+            form.querySelectorAll('input, select').forEach(input => {
+                input.setAttribute('required', true);
+            });
+
+            // Trigger form validation manually
+            if (!form.checkValidity()) {
+                // If validation fails, focus on the first invalid field
+                form.querySelector(':invalid').focus();
+                flashMessage.style.display = "block";
+                
+                setTimeout(function() {
+                    flashMessage.style.display = "none";
+                }, 5000);
+
+                isValid = false;
+            }
+
+            if (isValid) {
+                form.submit();  // If valid, submit the form
+                window.location.href = "{{ url_for('two') }}";
+            }
+        }
+        
+        // Function to navigate without validation when clicking Back
+        function goBack() {
+            window.location.href = "{{ url_for('nameEmail') }}";  // Redirect to the previous page
+        }
+    </script>
+</head>
+<body>
+
+
+
+<div class="container">
+    <img src="{{ url_for('static', filename='images/fpg.png') }}" alt="Food Plan" class="center-image">
+    
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="text-align: center;"><h2>Appetite Improvement Questionnaire</h2></div>
+        
+    </div>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="text-align: center;"><h3>(i) Personal Health and Information</h3></div>
+        
+    </div>
+    <br> <br>
+        
+</div>
+<div class="flash-message">
+    Missing fields. Please fill out all required fields.
+</div>
+    
+<div class="row" style="align-items: center;">
+    <div class="col-sm-1">
+
+    </div>
+    <div class="col-sm-11" >
+        <form class="health-info-form" method="post">
+    
+            <!-- Age -->
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" >
+            </div>
+            
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            
+            <!-- Height -->
+            <div class="form-group">
+                <label for="height">Height:</label>
+                <input type="number" id="height-feet" name="height-feet" placeholder="Ft"  style="width: 70px;">
+                <input type="number" id="height-inches" name="height-inches" placeholder="Inch"  style="width: 70px;">
+            </div>
+            
+            <!-- Weight -->
+            <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" name="weight" >
+            </div>
+            
+            <!-- Nicotine Withdrawal Symptoms -->
+            <p>Are you currently experiencing any symptoms of nicotine withdrawal?</p>
+            <div class="form-group">
+                
+                <label><input type="radio" name="nicotine-symptoms" value="Yes"> Yes</label>
+                <label><input type="radio" name="nicotine-symptoms" value="No"> No</label>
+            </div>
+            
+            <!-- Diagnosed Medical Conditions -->
+            <p for="medical-conditions">Do you have any diagnosed medical conditions? Please specify:</p>
+            <div class="form-group">
+                
+                <textarea id="medical-conditions" name="medical-conditions" rows="4" placeholder="E.g., diabetes, heart disease"></textarea>
+            </div> 
+    </div>
+
+</div>
+<br> <br>
+<div class="container">
+    <div class="row">
+        <div class="navigation-buttons">
+            
+            <div class="col-sm-3">
+                
+                    <button type="button" id="back-button" class="nav-button back-button" onclick="goBack()"><= Back</button>
+                
+            </div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-6">
+               <button type="button" class="nav-button next-button" onclick="validateOnNext(event)">Next =></button>
+                    
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <title>Diet Plan Request</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <script>
+        // JavaScript function to add 'required' attributes on Next button click
+        function validateOnNext(event) {
+            event.preventDefault();  // Prevent form submission initially
+
+            const form = document.querySelector('.nicotine-withdrawal-form');
+            const flashMessage = document.querySelector('.flash-message');
+            
+            let isValid = true;
+            flashMessage.style.display = "none";
+
+            
+
+            // Add required attributes to inputs
+            form.querySelectorAll('input, select, checkbox').forEach(input => {
+                input.setAttribute('required', true);
+            });
+
+            // Trigger form validation manually
+            if (!form.checkValidity()) {
+                // If validation fails, focus on the first invalid field
+                form.querySelector(':invalid').focus();
+                flashMessage.style.display = "block";
+                
+                setTimeout(function() {
+                    flashMessage.style.display = "none";
+                }, 5000);
+
+                isValid = false;
+            }
+
+            if (isValid) {
+                form.submit();
+                window.location.href = "{{ url_for('six') }}";  // If valid, submit the form
+            }
+        }
+        
+        // Function to navigate without validation when clicking Back
+        function goBack() {
+            window.location.href = "{{ url_for('four') }}";  // Redirect to the previous page
+        }
+    </script>
+</head>
+<body>
+
+
+
+<div class="container">
+    <img src="{{ url_for('static', filename='images/fpg.png') }}" alt="Food Plan" class="center-image">
+    
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="text-align: center;"><h2>Appetite Improvement Questionnaire</h2></div>
+        
+    </div>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="text-align: center;"><h3>(v) Nicotine Withdrawal and Appetite Concerns</h3></div>
+        
+    </div>
+    <br> <br>
+        
+</div>
+<div class="flash-message">
+    Missing fields. Please fill out all required fields.
+</div>
+    
+<div class="row" style="align-items: center;">
+    <div class="col-sm-2">
+
+    </div>
+    <div class="col-sm-8" >
+        <form class="nicotine-withdrawal-form">
+
+            <p for="nicotine-withdrawal-duration">How long have you been experiencing nicotine withdrawal?</p>
+            <div class="form-group">
+                <textarea id="nicotine-withdrawal-duration" name="nicotine-withdrawal-duration" rows="4" placeholder="E.g., Days, weeks or months?"></textarea>
+            </div> 
+
+            <p>What symptoms of nicotine withdrawal are you experiencing most intensely?</p>
+            <div class="form-group">
+                <label><input type="radio" name="nicotine-withdrawal-symptoms" value="Irritability">Irritability</label>
+                <label><input type="radio" name="nicotine-withdrawal-symptoms" value="Anxiety">Anxiety</label>
+                <label><input type="radio" name="nicotine-withdrawal-symptoms" value="Low Appetite">Low Appetite</label>
+                <label><input type="radio" name="nicotine-withdrawal-symptoms" value="Insomnia">Insomnia</label>
+                <label><input type="radio" name="nicotine-withdrawal-symptoms" value="Other">Other</label>
+            </div>
+
+            <p for="withdrawal-unappealing-foods">Do you find that certain foods are unappealing or difficult to consume due to withdrawal symptoms?</p>
+            <div class="form-group">
+                <textarea id="withdrawal-unappealing-foods" name="withdrawal-unappealing-foods" rows="4" placeholder="Any specific unappealing foods?"></textarea>
+            </div>
+            
+            <p for="nicotine-replacement-therapy">Are you currently using any nicotine replacement therapy or medications to manage withdrawal?</p>
+            <div class="form-group">
+                <textarea id="nicotine-replacement-therapy" name="nicotine-replacement-therapy" rows="4" placeholder="Any medications?"></textarea>
+            </div>
+
+           
+    </div>
+    <div class="col-sm-2">
+
+    </div>
+
+</div>
+<br> <br>
+<div class="container">
+    <div class="row">
+        <div class="navigation-buttons">
+            
+            <div class="col-sm-3">
+                
+                    <button type="button" id="back-button" class="nav-button back-button" onclick="goBack()"><= Back</button>
+                
+            </div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-6">
+               <button type="button" class="nav-button next-button" onclick="validateOnNext(event)">Next =></button>
+                    
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+</body>
+</html>
