@@ -63,14 +63,38 @@ def one():
     else:
         return render_template('one.html')
 
-@app.route('/two')
+@app.route('/two',methods = ['GET','POST'])
 def two():
     return render_template('two.html')
 
-@app.route('/three')
-def three():
-    return render_template('three.html')
 
+## three vars
+diff_to_eatF = ""
+appetite_levelF = ""
+appeal_when_app_lowF = ""
+fuller_fasterF = ""
+times_app_lowF = ""
+
+
+@app.route('/three',methods = ['GET','POST'])
+def three():
+    if request.method == 'POST':
+        diff_to_eat = request.form['diff-to-eat']
+        appetite_level = request.form['appetite-level']
+        appeal_when_app_low = request.form['appeal-when-app-low']
+        fuller_faster = request.form['fuller-faster']
+        times_app_low = request.form['times-app-low']
+
+        global diff_to_eatF, appetite_levelF, appeal_when_app_lowF, fuller_fasterF, times_app_lowF
+
+        diff_to_eatF = diff_to_eat
+        appetite_levelF = appetite_level
+        appeal_when_app_lowF = appeal_when_app_low
+        fuller_fasterF = fuller_faster
+        times_app_lowF = times_app_low
+        
+    return render_template('three.html')
+print(diff_to_eatF)
 
 @app.route('/four')
 def four():
